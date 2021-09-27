@@ -53,13 +53,18 @@
     <script>
       const request = window.indexedDB.open("budgetTracker", 1);
 
-      request.onsuccess = (event) => {
-        console.log(request.result);
-      };
-
       request.onupgradeneeded = ({ target }) => {
         const db = target.result;
-        const objectStore = db.createObjectStore("budgetTracker");
+        const objectStore = db.createObjectStore("budgetTracker", { keyPath: transactionID });
+        objectStore.createIndex("itemIndex", "item");
+      };
+
+      request.onsuccess = () => {
+        console.log(request.result);
+        // const db = request.result;
+        // const transaction = db.transaction(["budgetTracker"], "readwrite");
+        // const transactionStore = transaction.objectStore("budgetTracker");
+        // const itemIndex = transactionStore.index("itemIndex");
       };
     </script>
   </body>
