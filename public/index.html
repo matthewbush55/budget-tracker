@@ -50,5 +50,17 @@
         });
       }
     </script>
+    <script>
+      const request = window.indexedDB.open("budgetTracker", 1);
+
+      request.onsuccess = (event) => {
+        console.log(request.result);
+      };
+
+      request.onupgradeneeded = ({ target }) => {
+        const db = target.result;
+        const objectStore = db.createObjectStore("budgetTracker");
+      };
+    </script>
   </body>
 </html>
