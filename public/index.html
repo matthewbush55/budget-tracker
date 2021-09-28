@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="icons/icon-192x192.png" type="image/x-icon" />
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
 
     <title>Budget Tracker</title>
   </head>
@@ -40,7 +40,9 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="index.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/idb.js""></script>
+    <script src=""></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
@@ -49,23 +51,6 @@
           });
         });
       }
-    </script>
-    <script>
-      const request = window.indexedDB.open("budgetTracker", 1);
-
-      request.onupgradeneeded = ({ target }) => {
-        const db = target.result;
-        const objectStore = db.createObjectStore("budgetTracker", { keyPath: transactionID });
-        objectStore.createIndex("itemIndex", "item");
-      };
-
-      request.onsuccess = () => {
-        console.log(request.result);
-        // const db = request.result;
-        // const transaction = db.transaction(["budgetTracker"], "readwrite");
-        // const transactionStore = transaction.objectStore("budgetTracker");
-        // const itemIndex = transactionStore.index("itemIndex");
-      };
     </script>
   </body>
 </html>
