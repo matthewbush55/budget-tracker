@@ -1,16 +1,18 @@
 // connect to IndexDB
 const request = window.indexedDB.open("budgetTracker", 1);
 
+let db;
+
 // triggers if cache version change is detected
 request.onupgradeneeded = ({ target }) => {
   const db = target.result;
-  const objectStore = db.createObjectStore("budgetTracker", { keyPath: "transactionID" });
-  objectStore.createIndex("itemIndex", "item");
+  const objectStore = db.createObjectStore("budgetTracker", { autoIncrement: true });
+  // objectStore.createIndex("itemIndex", "item");
 };
 
 // if online, upload cached transactions
 request.onsuccess = ({ target }) => {
-  const db = target.result;
+  db = target.result;
   if (navigator.onLine) {
     uploadTransaction();
   }
@@ -39,11 +41,11 @@ function uploadTransaction() {
   const cachedTransactions = transactionStore.getAll();
 
   // if there are transactions, send them to the server
-  getAll.onsuccess = () => {
+  cachedTransactions.onsuccess = () => {
     if (cachedTransactions.result.length > 0) {
       fetch("/api/transaction", {
         method: "POST",
-        body: JSON.stringify(getAll.result),
+        body: JSON.stringify(cachedTransactions.result),
         headers: {
           Accept: "application/json, text/plain, */*",
           "Content-Type": "application/json",

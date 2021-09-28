@@ -6,11 +6,12 @@ console.log("Hello from service worker!");
 const FILES_TO_CACHE = [
   "/",
   "/index.html",
-  "/styles.css",
-  "/index.js",
+  "css/styles.css",
+  "js/index.js",
+  "js/idb.js",
+  "/manifest.json",
   "/icons/icon-192x192.png",
   "/icons/icon-512x512.png",
-  "/manifest.json",
 ];
 
 //variables to store the names of our cache
